@@ -1,0 +1,10 @@
+-r requirements.txt
+
+# Tests
+
+invoke==0.13.0
+py==1.4.31
+pytest==2.9.2
+pytest-cov==2.3.0
+coverage==4.1
+flake8==2.6.2

@@ -1,0 +1,35 @@
+language: python
+sudo: false
+python:
+  - '2.7'
+  - '3.4'
+  - '3.5'
+  - 'nightly'
+  - 'pypy'
+
+addons:
+  postgresql: "9.4"
+
+
+install:
+  - pip install -r requirements-dev.txt
+  - pip install coveralls
+
+before_script:
+  - psql -c 'create database pbm_test;' -U postgres
+
+
+env:
+  - SQLALCHEMY_DATABASE_URI: 'postgresql://:@localhost/pbm_test'
+  - APP_TOKEN: 'slehfjsbdfhdgf'
+
+script:
+- invoke t
+
+after_success:
+  coveralls
+
+notifications:
+  email:
+    on_success: change  # [always|never|change]
+    on_failure: always  # [always|never|change]
