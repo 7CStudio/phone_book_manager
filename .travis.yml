@@ -20,8 +20,7 @@ before_script:
 
 
 env:
-  - SQLALCHEMY_DATABASE_URI: 'postgresql://:@localhost/pbm_test'
-  - APP_TOKEN: 'slehfjsbdfhdgf'
+  - SQLALCHEMY_DATABASE_URI='postgresql://:@localhost/pbm_test' APP_TOKEN='slehfjsbdfhdgf'
 
 script:
 - invoke t
