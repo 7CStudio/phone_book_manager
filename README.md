@@ -77,9 +77,6 @@ Heroku:
 Deployment
 ===
 
-Deployment
-===
-
 Before deploying the code, create DB schema by running `invoke create_schema`. Don't forget to set environment variables.
 
 You can deploy the app along with existing server and `nginx` config looks like
