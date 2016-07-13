@@ -2,6 +2,8 @@
 
 from flask import Response, json, request
 
+from six import string_types
+
 from schematics.exceptions import ModelConversionError, ModelValidationError
 import status
 
@@ -50,7 +52,7 @@ def validate_or_raise(validator, data):
 
 
 def get_validation_error_message(message):
-    if isinstance(message, basestring):
+    if isinstance(message, string_types):
         return message
     elif isinstance(message, list) and message:
         return message[0]
