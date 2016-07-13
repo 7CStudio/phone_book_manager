@@ -45,6 +45,16 @@ class TestAPI(BaseTestCase):
         data = {'phone': unix_time, 'access_token': self.access_token}
         return self.make_post(url_for('api.user'), data=data)
 
+    def test_user_api_with_improper_token(self):
+        self.access_token = '123'
+        d = datetime.utcnow()
+        unix_time = calendar.timegm(d.utctimetuple())
+        self.access_token = str(unix_time)
+        data = {'phone': unix_time, 'access_token': self.access_token}
+        resp = self.make_post(url_for('api.user'), data=data, with_auth=True)
+
+        assert resp.status_code == status.HTTP_403_FORBIDDEN
+
     def test_user_api(self):
         resp = self.create_user()
         assert resp.status_code == status.HTTP_201_CREATED
@@ -66,3 +76,28 @@ class TestAPI(BaseTestCase):
         assert resp.status_code == status.HTTP_200_OK
         assert resp.json[0]['is_user'] is False
         assert resp.json[0]['phone'] == contacts[0]['phone']
+
+    def test_check_api_with_improper_token(self):
+        self.create_user()
+        data = {'contacts': [{'phone': '+911234', 'name': 'Walter'}]}
+        resp = self.make_post(url_for('api.sync'), data=data,
+                              with_auth=False)
+
+        assert resp.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_check_api_with_empty_contacts(self):
+        self.create_user()
+        data = {'contacts': []}
+        resp = self.make_post(url_for('api.sync'), data=data,
+                              with_auth=True)
+
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        assert resp.json == {'error': '`contacts` field is required'}
+
+    def test_check_api_without_body(self):
+        self.create_user()
+        resp = self.make_post(url_for('api.sync'), data={},
+                              with_auth=True)
+
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        assert resp.json == {'error': 'No JSON found'}

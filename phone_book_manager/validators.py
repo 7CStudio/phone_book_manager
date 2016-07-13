@@ -4,6 +4,9 @@ from schematics.models import Model
 from schematics.types import StringType
 from schematics.types.compound import ModelType, ListType
 
+from schematics.exceptions import ModelValidationError
+
+
 HANDLE_MESSAGES = {'min_length': 'Minimum 1 record is required',
                    'max_length': 'Exceeded max length of 20'}
 
@@ -21,4 +24,10 @@ class PhoneValidator(Model):
 
 
 class SyncValidator(Model):
-    contacts = ListType(ModelType(PhoneValidator))
+    contacts = ListType(ModelType(PhoneValidator), required=True)
+
+    def validate(self):
+        super(SyncValidator, self).validate()
+        if self.contacts == []:
+            raise ModelValidationError(
+                {'contacts': '`contacts` field is required'})

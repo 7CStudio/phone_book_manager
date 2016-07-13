@@ -32,11 +32,9 @@ def sync_contacts(user_id, contacts):
     return new_contacts + friends
 
 
-def create_contact(friend_id, name, phone, commit=False):
+def create_contact(friend_id, name, phone):
     contact = Contact(friend_id=friend_id, name=name, phone=phone)
     db.session.add(contact)
-    if commit:
-        db.session.commit()
     return contact
 
 
