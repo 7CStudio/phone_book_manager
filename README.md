@@ -71,8 +71,8 @@ Heroku:
 - Demo application is available in heroku.
 - User Endpoint: `https://pbm.herokuapp.com/api/v1/phonebook/user`
 - Sync Endpoint: `https://pbm.herokuapp.com/api/v1/phonebook/sync`
-- Demo APP Token: sc.ewfjfjfsfsdjwcerfg
-- Demo User Access Token: kdsjfkvjfkhdjfhsdkfhjdkf
+- Demo APP Token: `sc.ewfjfjfsfsdjwcerfg`
+- Demo User Access Token: `kdsjfkvjfkhdjfhsdkfhjdkf`
 
 Deployment
 ===
