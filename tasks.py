@@ -15,4 +15,4 @@ def test(ctx, pdb=False):
         cmd += ' --pdb'
     ctx.run(cmd, pty=True)
     ctx.run("py.test --cov-report term-missing --cov=phone_book_manager test_api.py")  # noqa
-    ctx.run('flake8')
+    ctx.run('flake8 .')
