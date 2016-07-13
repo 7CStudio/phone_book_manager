@@ -12,6 +12,7 @@ def get_default_settings():
 
 
 if __name__ == "__main__":
+    os.environ['SQLALCHEMY_ECHO'] = 'True'
     app_env_config = get_default_settings()
     config_file = os.environ.get('APP_CONFIG', app_env_config)
     app = create_app(config=config_file)
